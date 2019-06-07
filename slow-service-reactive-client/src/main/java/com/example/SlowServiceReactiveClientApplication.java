@@ -2,16 +2,11 @@ package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.circuitbreaker.commons.CircuitBreaker;
 import org.springframework.cloud.circuitbreaker.commons.CircuitBreakerFactory;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -38,12 +33,15 @@ class ClientController {
 
     @GetMapping("/")
     public Mono<String> hello() {
-        return webClient.build().get().uri(uriBuilder -> uriBuilder
-                .scheme("http")
-                .host("slow-service").path("/slow")
-                .build())
-                .retrieve().bodyToMono(String.class);
+        return webClient.build()
+                .get().uri(uriBuilder -> uriBuilder
+                        .scheme("http")
+                        .host("slow-service").path("/slow")
+                        .build())
+                .retrieve().bodyToMono(String.class).transform(it -> {
+                    CircuitBreaker cb = circuitBreakerFactory.create("slow");
+                    return cb.run(() -> it, throwable -> Mono.just("fallback"));
+                });
     }
-
 }
 

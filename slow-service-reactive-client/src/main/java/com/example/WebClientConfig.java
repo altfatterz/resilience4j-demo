@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@LoadBalancerClient(name = "slow-service")
+@LoadBalancerClient(name = "slow-service", configuration = CustomRibbonConfiguration.class)
 class WebClientConfig {
 
     @Bean
