@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: slow-service-reactive-client
+
+server:
+  port: 8081
