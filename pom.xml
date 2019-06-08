@@ -12,6 +12,7 @@
         <module>slow-service</module>
         <module>slow-service-client</module>
         <module>slow-service-reactive-client</module>
+        <module>slow-service-client-with-only-resilience4j</module>
     </modules>
 
 </project>

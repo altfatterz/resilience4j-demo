@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: slow-service-client-with-only-resilience4j
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
