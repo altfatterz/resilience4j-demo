@@ -56,13 +56,7 @@ Content-Type: application/json;charset=UTF-8
 Date: Fri, 07 Jun 2019 15:13:26 GMT
 Transfer-Encoding: chunked
 
-{
-    "error": "Internal Server Error",
-    "message": "Connection refused: /192.168.87.65:8090",
-    "path": "/",
-    "status": 500,
-    "timestamp": "2019-06-07T15:13:26.924+0000"
-}
+fallback
 ```
 
 
