@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @LoadBalancerClient(name = "slow-service", configuration = CustomRibbonConfiguration.class)
-public class WebClientConfig {
+public class WebClientConfiguration {
 
     @Bean
     @LoadBalanced
